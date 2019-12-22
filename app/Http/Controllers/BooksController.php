@@ -15,32 +15,27 @@ use App\Setting;
 
 class BooksController extends Controller
 {
+
     public function index()
     {
         $setting     = Setting::first();
         $itemperpage = ($setting) ? (int)$setting['per_page'] : 10;
 
-        // $languages  = Language::latest()->get();
         $books = Book::latest()->with(['genres','author','publisher','language'])
                                ->withCount(['issuedbooks' => function($query) { $query->where('status', '!=', 'returned'); }])
                                ->paginate($itemperpage);
-        // $language = Language::find(1)->language;
-        // dd($language);
-        // return $books;
 
-        return view('books.list', compact('books'));
-    }
-
-    public function create(){
         $authors    = Author::latest()->get();
         $languages  = Language::latest()->get();
         $allseries  = Series::latest()->get();
         $publishers = Publisher::latest()->get();
         $genres     = Genre::latest()->get();
 
-        return view('books.add', compact('authors','languages','allseries','publishers','genres'));
+        // return $setting;
 
+        return view('books.index', compact('books','authors','languages','allseries','publishers','genres'));
     }
+
 
     public function store(Request $request)
     {
@@ -49,8 +44,7 @@ class BooksController extends Controller
             'ISBN'            => 'required|unique:books',
             'publisher_id'    => 'required',
             'author_id'       => 'required',
-            'genre_id'        => 'required',
-            'series_id'       => 'required',
+            'genre'           => 'required',
             'published_year'  => 'required',
             'pages'           => 'required',
             'binding'         => 'required',
@@ -62,14 +56,11 @@ class BooksController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $img = $request->file('image');
-            $new_name = rand().'-'.$img->getClientOriginalName();
-            $img->move(public_path('Upload/Books/'),$new_name);
-            $imageName = $new_name;
-          } else {
-            $imageName = 'noimage.jpg';
-          }
-        // return $imageName;
+
+          $imageName = 'book-'.time().'.'.$request->image->getClientOriginalExtension();
+          $request->image->move(public_path('images'), $imageName);
+        }
+
         $book = Book::create([
           'title'           => $request->title,
           'slug'            => str_slug($request->title),
@@ -86,12 +77,12 @@ class BooksController extends Controller
           'price'           => $request->price,
           'language_id'     => $request->language_id,
           'description'     => $request->description,
-          'image'           => $imageName,
+          'image'           => $imageName
         ]);
 
         $book->genres()->attach($request->genre);
 
-        return redirect(route('books.index'))->with('success', 'Book add successfully.');
+        return back()->with('success', 'Book added successfully.');
     }
 
 
@@ -104,28 +95,20 @@ class BooksController extends Controller
 
     public function edit($id)
     {
-        $books = Book::findOrFail($id);
-
-        // return $books->genres;
-        $authors    = Author::latest()->get();
-        $languages  = Language::latest()->get();
-        $allseries  = Series::latest()->get();
-        $publishers = Publisher::latest()->get();
-        $genres     = Genre::latest()->get();
-
-        // return response()->json(['book' => $book]);
-        return view('books.edit', compact('books','authors','languages','allseries','publishers','genres'));
+        $book = Book::with('genres')->findOrFail($id);
+        return response()->json(['book' => $book]);
     }
 
 
     public function update(Request $request, $id)
     {
+      // return $request->all();
       $request->validate([
           'title'           => 'required',
           'ISBN'            => 'required',
           'publisher_id'    => 'required',
           'author_id'       => 'required',
-          'genre_id'        => 'required',
+          'genre'           => 'required',
           'published_year'  => 'required',
           'pages'           => 'required',
           'binding'         => 'required',
@@ -133,25 +116,28 @@ class BooksController extends Controller
           'price'           => 'required',
           'language_id'     => 'required',
           'description'     => 'required',
+          'image'           => 'image'
       ]);
-        // return $request->all();
+
       $book = Book::findOrFail($id);
-        // foreach($book->genres as $genre){
-        //     echo $genre->name. '<br>';
-        // }
+
       if ($request->hasFile('image')) {
-        if(file_exists(public_path('Upload/Books/') . $book->image)){
-          unlink(public_path('Upload/Books/') . $book->image);
+
+        if(file_exists(public_path('images/') . $book->image)){
+          unlink(public_path('images/') . $book->image);
         }
+
         $imageName = 'book-'.time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('Upload/Books'), $imageName);
+        $request->image->move(public_path('images'), $imageName);
+
       }else{
         $imageName = $book->image;
       }
+
       $book->title           = $request->title;
       $book->slug            = str_slug($request->title);
-      $book->subtitle        = $request->subtitle;
       $book->ISBN            = $request->ISBN;
+      $book->subtitle        = $request->subtitle;
       $book->series_id       = $request->series_id;
       $book->publisher_id    = $request->publisher_id;
       $book->author_id       = $request->author_id;
@@ -165,27 +151,24 @@ class BooksController extends Controller
       $book->description     = $request->description;
       $book->image           = $imageName;
       $book->save();
-    //   dd($request->all());
-      $book->genres()->sync($request->genre_id);
 
-    //   return back()->with('success', 'Book updated successfully.');
-    return redirect(route('books.index'))->with('success', 'Book updated successfully.');
+      $book->genres()->sync($request->genre);
 
+      return back()->with('success', 'Book updated successfully.');
     }
 
 
-    public function destroy(Book $id)
+    public function destroy($id)
     {
-      // $product->delete()
       $book = Book::findOrFail($id);
 
-      if(file_exists(public_path('Upload/Books/') . $book->image)){
-        unlink(public_path('Upload/Books/') . $book->image);
+      if(file_exists(public_path('images/') . $book->image)){
+        unlink(public_path('images/') . $book->image);
       }
 
       $book->genres()->detach();
       $book->delete();
 
-      return redirect(route('books.index'))->with('success', 'Book updated successfully.');
+      return response()->json(['book' => 'deleted']);
     }
 }

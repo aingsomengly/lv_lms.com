@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
-    protected $fillable = ['name','slug','language_id'];
+    protected $fillable = ['name','slug'];
 
     public function book()
     {

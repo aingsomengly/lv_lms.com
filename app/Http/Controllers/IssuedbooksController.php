@@ -29,19 +29,7 @@ class IssuedbooksController extends Controller
 
         return view('issuedbooks.index', compact('issuedbooks','books','users','currency'));
     }
-    public function create(){
-        $setting     = Setting::first();
-        $currency    = ($setting) ? $setting['currency'] : 'USD';
-        $books = book::get();
-        $users = User::get();
 
-
-        $issuedbook = Issuedbook::latest()->get();
-
-        // return response()->json(['issuedbook'=>$issuedbook]);
-
-        return view('issuedbooks.add', compact('issuedbook','books','users','currency'));
-    }
 
 
     public function store(Request $request)
@@ -75,17 +63,8 @@ class IssuedbooksController extends Controller
 
     public function edit($id)
     {
-        $setting     = Setting::first();
-        $currency    = ($setting) ? $setting['currency'] : 'USD';
-        $books = book::get();
-        $users = User::get();
-
-
         $issuedbook = Issuedbook::findOrFail($id);
-
-        // return response()->json(['issuedbook'=>$issuedbook]);
-
-        return view('issuedbooks.edit', compact('issuedbook','books','users','currency'));
+        return response()->json(['issuedbook'=>$issuedbook]);
     }
 
 
@@ -97,11 +76,11 @@ class IssuedbooksController extends Controller
           'expiry_date' => 'required',
         ]);
 
-        $issuedbooks = Issuedbook::findOrFail($id);
+        $issuedbook = Issuedbook::findOrFail($id);
 
-        $book_id = isset($request->book_id) ? $request->book_id : $issuedbooks->book_id;
+        $book_id = isset($request->book_id) ? $request->book_id : $issuedbook->book_id;
 
-        $issuedbooks->update([
+        $issuedbook->update([
           'book_id'       => $book_id,
           'user_id'       => $request->user_id,
           'issued_date'   => $request->issued_date,
@@ -111,7 +90,7 @@ class IssuedbooksController extends Controller
           'status'        => $request->status,
         ]);
 
-        return redirect(route('issuedbooks.index'))->with('success', 'Book updated successfully.');
+        return back()->with('success', 'Book Issued updated successfully.');
     }
 
 

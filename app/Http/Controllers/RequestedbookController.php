@@ -21,7 +21,7 @@ class RequestedbookController extends Controller
 
         $books = Book::with('author')->orderBy('title', 'asc')->get();
         $users = User::get();
-        // return $books;
+
         if(Auth::user()->role_id == 3){
           $requestedbooks = Requestedbook::latest()->with(['book','issuedbook','user'])->where('user_id',Auth::id())->paginate($itemperpage);
         }else{
@@ -31,22 +31,6 @@ class RequestedbookController extends Controller
         return view('requestedbooks.index', compact('requestedbooks','books','users','currency'));
     }
 
-    public function create(){
-        $setting     = Setting::first();
-        $itemperpage = ($setting) ? (int)$setting['per_page'] : 10;
-        $currency    = ($setting) ? $setting['currency'] : 'USD';
-
-        $books = Book::with('author')->orderBy('title', 'asc')->get();
-        $users = User::get();
-
-        if(Auth::user()->role_id == 3){
-            $requestedbook = Requestedbook::latest()->with(['book','issuedbook','user'])->where('user_id',Auth::id())->paginate($itemperpage);
-          }else{
-            $requestedbook = Requestedbook::latest()->with(['book','issuedbook','user'])->paginate($itemperpage);
-          }
-
-        return view('requestedbooks.add', compact('requestedbooks','books','users','currency'));
-    }
 
     public function store(Request $request)
     {
@@ -66,7 +50,7 @@ class RequestedbookController extends Controller
           'user_id'       => $user_id
         ]);
 
-        return redirect(route('requestedbooks.index'))->with('success', 'Requested Book created successfully.');
+        return back()->with('success', 'Book requested successfully.');
     }
 
 
@@ -80,12 +64,9 @@ class RequestedbookController extends Controller
 
     public function edit(Requestedbook $requestedbook)
     {
-        $books = Book::with('author')->orderBy('title', 'asc')->get();
-        $users = User::get();
         $requestedbook = Requestedbook::with('book')->findOrFail($requestedbook->id);
 
-        // return response()->json(['requestedbook' => $requestedbook]);
-        return view('requestedbooks.edit', compact('requestedbook','books','users'));
+        return response()->json(['requestedbook' => $requestedbook]);
     }
 
 
@@ -127,7 +108,7 @@ class RequestedbookController extends Controller
           Issuedbook::where('book_id', $book_id)->where('user_id', $user_id)->delete();
         }
 
-        return redirect(route('requestedbooks.index'))->with('success', 'Requested Book updated successfully.');
+        return back()->with('success', 'Requested Book updated successfully.');
     }
 
 

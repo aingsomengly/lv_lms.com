@@ -14,21 +14,13 @@ class AuthorsController extends Controller
 
     public function index()
     {
-        $setting        = Setting::first();
-        $itemperpage    = ($setting) ? (int)$setting['per_page'] : 10;
+        $setting     = Setting::first();
+        $itemperpage = ($setting) ? (int)$setting['per_page'] : 10;
 
-        $authors        = Author::latest()->with(['country','language'])->paginate($itemperpage);
-        $countries      = Country::latest()->get();
-        $languages      = Language::latest()->get();
-        return view('authors.index', compact('authors','countries','languages'));
-    }
-
-    public function create(){
-        $author   = Author::latest()->with(['country','language']);
+        $authors   = Author::latest()->with(['country','language'])->paginate($itemperpage);
         $countries = Country::latest()->get();
         $languages = Language::latest()->get();
-
-        return view('authors.add', compact('author','countries','languages'));
+        return view('authors.index', compact('authors','countries','languages'));
     }
 
 
@@ -44,12 +36,10 @@ class AuthorsController extends Controller
       ]);
 
       if ($request->hasFile('image')) {
-        $img = $request->file('image');
-        $new_name = rand().'-'.$img->getClientOriginalName();
-        $img->move(public_path('Upload/authors/'),$new_name);
-        $imageName = $new_name;
-      } else {
-        $imageName = 'noimage.png';
+
+        $imageName = 'author-'.time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images'), $imageName);
+
       }
 
       Author::create([
@@ -62,7 +52,7 @@ class AuthorsController extends Controller
         'image'       => $imageName
       ]);
 
-      return redirect(route('authors.index'))->with('success', 'Author Add successfully.');
+      return back()->with('success', 'Author added successfully.');
     }
 
 
@@ -75,12 +65,8 @@ class AuthorsController extends Controller
 
     public function edit($id)
     {
-        $languages  = Language::latest()->get();
-        $countries  = Country::latest()->get();
-        $author     = Author::findOrFail($id);
-        // return response()->json(['author' => $author]);
-
-        return view('authors.edit', compact('author','languages','countries'));
+        $author = Author::findOrFail($id);
+        return response()->json(['author' => $author]);
     }
 
 
@@ -92,19 +78,19 @@ class AuthorsController extends Controller
           'language_id' => 'required',
           'dateofbirth' => 'required',
           'bio'         => 'required',
-        //   'image'       => 'image'
+          'image'       => 'image'
       ]);
 
       $author = Author::findOrFail($id);
 
       if ($request->hasFile('image')) {
 
-        if(file_exists(public_path('Upload/authors/') . $author->image)){
-          unlink(public_path('Upload/author/') . $author->image);
+        if(file_exists(public_path('images/') . $author->image)){
+          unlink(public_path('images/') . $author->image);
         }
 
         $imageName = 'author-'.time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('Upload/authors/'), $imageName);
+        $request->image->move(public_path('images'), $imageName);
 
       }else{
         $imageName = $author->image;
@@ -119,24 +105,20 @@ class AuthorsController extends Controller
       $author->image        = $imageName;
       $author->save();
 
-      return redirect(route('authors.index'))->with('success', 'Author updated successfully.');
+      return back()->with('success', 'Author updated successfully.');
     }
+
 
     public function destroy($id)
     {
-      $author    = Author::findOrFail($id);
-      $countries = Country::findOrFail($id);
-      $languages = Language::findOrFail($id);
+      $author = Author::findOrFail($id);
 
-      if(file_exists(public_path('upload/authors/') . $author->image)){
-        unlink(public_path('upload/authors/') . $author->image);
+      if(file_exists(public_path('images/') . $author->image)){
+        unlink(public_path('images/') . $author->image);
       }
 
       $author->delete();
-      $countries->genres()->detach();
-      $languages->genres()->detach();
 
-      return redirect()->route('authors.index')
-                        ->with('success','Author deleted successfully');
+      return response()->json(['author' => 'deleted']);
     }
 }

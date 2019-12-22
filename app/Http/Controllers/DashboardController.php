@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Book;
-// use App\Role;
-use App\User;
-
 use App\Issuedbook;
 use App\Requestedbook;
-use App\Role;
+use Auth;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -22,9 +19,6 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        // $user = User::find(1)->hasRole;
-        // $role = User::find(1)->role;
-        // return $role;
         $totalbooks     = Book::sum('quantity');
         $totissuedbooks = Issuedbook::count();
         $returnedbooks  = Issuedbook::where('status','returned')->count();

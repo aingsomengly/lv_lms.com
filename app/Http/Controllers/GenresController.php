@@ -18,10 +18,7 @@ class GenresController extends Controller
         $genres = Genre::latest()->paginate($itemperpage);
         return view('genres.index', compact('genres'));
     }
-    public function create(){
-        $genres = Genre::latest();
-        return view('genres.add', compact('genres'));
-    }
+
 
     public function store(Request $request)
     {
@@ -48,8 +45,7 @@ class GenresController extends Controller
     public function edit($id)
     {
         $genre = Genre::findOrFail($id);
-
-        return view('genres.edit', compact('genre'));
+        return response()->json(['genre' => $genre]);
     }
 
 
@@ -65,17 +61,13 @@ class GenresController extends Controller
         $genre->slug = str_slug($request->name, '-');
         $genre->save();
 
-        return redirect(route('genres.index'))->with('success', 'Genre updated successfully.');
+        return back()->with('success', 'Genre updated successfully.');
     }
 
 
-    public function destroy(Genre $genre)
+    public function destroy($id)
     {
-    //   $genre = Genre::findOrFail($id)->delete();
-        $genre->delete();
-
-        return redirect()->route('genres.index')
-                        ->with('success','Product deleted successfully');
-    //   return response()->json(['genre' => 'deleted']);
+      $genre = Genre::findOrFail($id)->delete();
+      return response()->json(['genre' => 'deleted']);
     }
 }

@@ -12,7 +12,7 @@ use Hash;
 
 class UsersController extends Controller
 {
-    public function index1()
+    public function index()
     {
         $setting     = Setting::first();
         $itemperpage = ($setting) ? (int)$setting['per_page'] : 10;
@@ -22,11 +22,8 @@ class UsersController extends Controller
         } else {
             $users = User::latest()->with('role')->where('role_id','!=',1)->paginate($itemperpage);
         }
-        return $users;
-        // return view('users.index', compact('users'));
-    }
-    public function create(){
 
+        return view('users.index', compact('users'));
     }
 
 
