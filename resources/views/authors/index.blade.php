@@ -17,7 +17,7 @@
   <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
     <thead>
       <tr>
-        <th>SL.</th>
+        <th>លេខ​រៀង</th>
         <th>រូប​ភាព</th>
         <th>​​ឈ្មោះ</th>
         <th>ប្រទេស</th>

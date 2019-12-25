@@ -115,7 +115,7 @@ class BooksController extends Controller
           'quantity'        => 'required',
           'price'           => 'required',
           'language_id'     => 'required',
-          'description'     => 'required',
+          // 'description'     => 'required',
           'image'           => 'image'
       ]);
 

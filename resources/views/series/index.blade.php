@@ -1,49 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                  <strong>All Series</strong>
-                  <button type="button" class="btn btn-sm btn-success float-right" id="createseries"><i class="fas fa-plus-circle mr-1"></i>create series</button>
-                </div>
-
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>SL.</th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($allseries as $series)
-                      <tr>
-                        <th scope="row">{{$series->id}}.</th>
-                        <td>{{$series->name}}</td>
-                        <td>{{$series->slug}}</td>
-                        <td>
-                          <button type="button" class="btn btn-sm btn-info" data-id="{{$series->id}}" id="seriesview"><i class="fas fa-eye"></i></button>
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$series->id}}" id="seriesedit"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-danger" data-id="{{$series->id}}" id="seriesdelete"><i class="fas fa-trash"></i></button>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $allseries->links() }}
-                </div>
-            </div>
-        </div>
+  <div class="x_panel">
+    <div class="x_title">
+        <h2>បញ្ចី​​ស៊េរី<small>តារាង</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li>
+            <button href="{{route('books.create')}}"  id="createseries" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                បន្ថែម​​​ស៊េរី
+            </button>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
     </div>
-</div>
+    <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>លេខ​រៀង</th>
+          <th>ឈ្មោះ</th>
+          <th>​ស្លាក់</th>
+          <th>ប្រត្តិបត្តិ</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($allseries as $series)
+        <tr>
+          <th scope="row">{{$series->id}}.</th>
+          <td>{{$series->name}}</td>
+          <td>{{$series->slug}}</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-info" data-id="{{$series->id}}" id="seriesview"><i class="fa fa-eye"></i> មើល​លំអិត</button>
+            <button type="button" class="btn btn-sm btn-warning" data-id="{{$series->id}}" id="seriesedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+            <button type="button" class="btn btn-sm btn-danger" data-id="{{$series->id}}" id="seriesdelete"><i class="fa fa-trash"></i> ​លុប</button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+    <div class="card-foter m-auto">
+        {{ $allseries->links() }}
+    </div>
+  </div>
+
 
 @include('series.modals.createseries')
 @include('series.modals.editseries')

@@ -79,7 +79,7 @@
                     <h3>ទូ​ទៅ</h3>
                     <ul class="nav side-menu">
                     <li><a href="{{route('dashboard')}}"><i class="fa fa-bar-chart-o"></i>ផ្ទៃតាប្លូ</a>
-    
+                        
                     @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
                         <li><a><i class="fa fa-book"></i>សៀវភៅ <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
@@ -91,6 +91,7 @@
                                 <li><a href="{{route('countries.index')}}">ប្រទេស</a></li>
                                 {{-- <li><a href="report">Book Report</a></li> --}}
                                 <li><a href="{{route('books.index')}}">បញ្ជី​សៀវភៅ</a></li>
+                                <li><a href="{{route('series.index')}}"> ស៊េរី </a></li>
                             </ul>
                         </li>
                     @endif
@@ -104,9 +105,9 @@
                           <li><a href="">All List Student</a></li>
                         </ul>
                       </li> --}}
-                        {{--  @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
-                            <li><a href="{{route('roles.index')}}"><i class="fa fa-bar-chart-o"></i>តំណែង</a>
-                        @endif  --}}
+                        @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
+                            <li><a href="{{ route('settings.index') }}"><i class="fa fa-bar-chart-o"></i>កំណត់</a>
+                        @endif
                        {{-- <li><a><i class="fa fa-users"></i> Supplier <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                           <li><a href="#">Supplier Register</a></li>
@@ -125,7 +126,7 @@
                         <ul class="nav child_menu">
                           <li><a href="#">User Register</a></li>
                           <li><a href="#">User Report</a></li>
-                          <li><a href="{{ route('users.index')}}">All List User</a></li>
+                          <li><a href="{{ route('users.index') }}">All List User</a></li>
                         </ul>
                       </li>
                       {{-- <li><a href="chart"><i class="fa fa-bar-chart-o"></i>List Chart</a></li> --}}
@@ -192,7 +193,7 @@
                         <span class=" fa fa-angle-down"></span>
                       </a>
                       <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> ប្រវត្តិរូប</a></li>
+                      <li><a href="{{route('profile')}}"> ប្រវត្តិរូប</a></li>
                         {{-- <li>
                           <a href="javascript:;">
                             <span class="badge bg-red pull-right">50%</span>

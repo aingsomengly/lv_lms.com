@@ -1,3 +1,12 @@
+@if ($errors->any())
+<div class="alert alert-danger">
+  <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+  </ul>
+</div><br />
+@endif
 <div class="modal fade" id="createbookmodal">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

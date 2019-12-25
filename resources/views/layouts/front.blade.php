@@ -73,6 +73,9 @@
                                     <i class="far fa-user-circle mr-1"></i>{{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu rounded-0" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                        <i class="fas fa-user mr-2"></i>Dashboard
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('profile') }}">
                                         <i class="fas fa-user mr-2"></i>Profile
                                     </a>
@@ -81,7 +84,7 @@
                                         document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
                                     </a>
-
+                                   
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
