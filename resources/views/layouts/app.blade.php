@@ -192,7 +192,7 @@
                         <span class=" fa fa-angle-down"></span>
                       </a>
                       <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> Profile</a></li>
+                        <li><a href="javascript:;"> ប្រវត្តិរូប</a></li>
                         {{-- <li>
                           <a href="javascript:;">
                             <span class="badge bg-red pull-right">50%</span>
@@ -203,7 +203,7 @@
                         <li><a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('ចាក​ចេញ') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
