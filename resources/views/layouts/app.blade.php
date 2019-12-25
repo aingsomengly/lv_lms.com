@@ -104,9 +104,9 @@
                           <li><a href="">All List Student</a></li>
                         </ul>
                       </li> --}}
-                        @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
+                        {{--  @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
                             <li><a href="{{route('roles.index')}}"><i class="fa fa-bar-chart-o"></i>តំណែង</a>
-                        @endif
+                        @endif  --}}
                        {{-- <li><a><i class="fa fa-users"></i> Supplier <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                           <li><a href="#">Supplier Register</a></li>
