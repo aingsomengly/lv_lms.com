@@ -14,8 +14,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    {{-- <link href="{{ asset('css/fa-svg-with-js.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
+    {{--  <link href="{{ asset('css/fa-svg-with-js.css') }}" rel="stylesheet">  --}}
+    {{--  <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">  --}}
 
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
@@ -85,7 +85,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="{{route('requestedbooks.index')}}"​​​>ស្នើរសុំ​សៀវភៅ</a></li>
                                 <li><a href="{{route('issuedbooks.index')}}">បញ្ហា​សៀវភៅ</a></li>
-                                <li><a href="return">ប្រគល់​​សៀវភៅ</a></li>
+                                {{--  <li><a href="return">ប្រគល់​​សៀវភៅ</a></li>  --}}
                                 <li><a href="{{route('authors.index')}}">អ្នកនិពន្ធ</a></li>
                                 <li><a href="{{route('genres.index')}}">ប្រភេទ​សៀវភៅ</a></li>
                                 <li><a href="{{route('countries.index')}}">ប្រទេស</a></li>
@@ -104,9 +104,9 @@
                           <li><a href="">All List Student</a></li>
                         </ul>
                       </li> --}}
-                        {{-- @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') ) --}}
-                            {{-- <li><a href="{{route('roles.index')}}"><i class="fa fa-bar-chart-o"></i>តំណែង</a> --}}
-                        {{-- @endif --}}
+                        @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
+                            <li><a href="{{route('roles.index')}}"><i class="fa fa-bar-chart-o"></i>តំណែង</a>
+                        @endif
                        {{-- <li><a><i class="fa fa-users"></i> Supplier <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                           <li><a href="#">Supplier Register</a></li>
@@ -301,8 +301,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/fontawesome-all.min.js') }}"></script>
-    <script src="{{ asset('js/summernote.min.js') }}"></script>
+    {{--  <script src="{{ asset('js/fontawesome-all.min.js') }}"></script>  --}}
+    {{--  <script src="{{ asset('js/summernote.min.js') }}"></script>  --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js" charset="utf-8"></script>

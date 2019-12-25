@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth','roles'], 'roles' => ['librarian','admin']
 });
 
 // MEMBER AND LIBRARIAN AND ADMIN
-// Route::group(['middleware' => ['auth','roles'], 'roles' => ['Member','librarian','Admin']], function(){
+Route::group(['middleware' => ['auth','roles'], 'roles' => ['Member','librarian','Admin']], function(){
 
   Route::resource('requestedbooks','RequestedbookController');
   Route::resource('posts','PostController');
@@ -69,4 +69,4 @@ Route::group(['middleware' => ['auth','roles'], 'roles' => ['librarian','admin']
   Route::post('profile','ProfileController@profileUpdate')->name('profile.update');
   Route::post('changepassword','ProfileController@changePassword')->name('profile.changepassword');
 
-// });
+});

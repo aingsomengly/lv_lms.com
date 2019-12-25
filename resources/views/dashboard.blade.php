@@ -1,90 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">Dashboard</div>
+    @if(auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian')
+                    <div class="row top_titles">
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-book"></i></div>
+                          <div class="count">{{ $totalbooks }}</div>
+                          <h3>សរុប</h3>
 
-                <div class="card-body">
+                          <p>សៀវ​ភៅ សរុបទាំងអស់</p>
+                        </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-book"></i></div>
+                          <div class="count">{{ $latebooks }}</div>
+                          <h3>ប្រគល់​យឺត</h3>
+                          <p>សៀវ​ភៅ ដែលប្រគល់​យឺត​ទាំង​អស់</p>
+                        </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-user"></i></div>
+                          <div class="count">{{ $returnedbooks }}</div>
+                          <h3>បាន​ប្រគល់​</h3>
+                          <p>បាន ​ប្រគល់​សៀវភៅ​​ទាំង​អស់</p>
+                        </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-users"></i></div>
+                          <div class="count">{{ $lostbooks }}</div>
+                          <h3>បាត់</h3>
+                          <p>សៀវ​ភៅ បាន​ទាំង​អស់</p>
+                        </div>
+                      </div>
 
-                    @if(auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian')
 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card text-white bg-primary mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $totalbooks }}</h1>
-                                     <p class="card-text uppercase">សៀវភៅ សរុប</p>
-                                 </div>
-                            </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-tachometer"></i></div>
+                          <div class="count">{{ $totissuedbooks }}</div>
+                          <h3>កិច្ច​ការ</h3>
+
+                          <p>សៀវ​ភៅ កិច្ច​ការទាំង​អស់</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-warning mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $latebooks }}</h1>
-                                     <p class="card-text uppercase">សៀវភៅ ដែលយឺត</p>
-                                 </div>
-                            </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-book"></i></div>
+                          <div class="count">{{ $totrequestedbooks }}</div>
+                          <h3>បាន​ស្នើរ​សុំ​</h3>
+                          <p>បាន​ស្នើរ​សុំ​ សៀវ​ភៅ​ទាំង​អស់</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-success mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $returnedbooks }}</h1>
-                                     <p class="card-text uppercase">បាន​ប្រគល​​ សៀវភៅ</p>
-                                 </div>
-                            </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-user"></i></div>
+                          <div class="count">{{ $pendingbooks }}</div>
+                          <h3>​ត្រូវ​បាន​រង់​ចាំ</h3>
+                          <p>ការរង់​ចាំ សៀវ​ភៅ​ទាំង​អស់</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-danger mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $lostbooks }}</h1>
-                                     <p class="card-text uppercase">សៀវភៅ ដែល​បាត់</p>
-                                 </div>
-                            </div>
+                      </div>
+                      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats">
+                          <div class="icon"><i class="fa fa-users"></i></div>
+                          <div class="count">{{ $rejectedbooks }}</div>
+                          <h3>ផ្អាក</h3>
+                          <p>សៀវ​ភៅ​ ដែល​​ផ្អាកទាំង​អស់</p>
                         </div>
+                      </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card text-white bg-secondary mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $totissuedbooks }}</h1>
-                                     <p class="card-text uppercase">សៀវភៅ កិច្ចការ</p>
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-info mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $totrequestedbooks }}</h1>
-                                     <p class="card-text uppercase">បាន​ស្នើរសុំ សៀវភៅ</p>
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-dark mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $pendingbooks }}</h1>
-                                     <p class="card-text uppercase">រង់ាចាំ សៀវភៅ</p>
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-danger mb-3">
-                                 <div class="card-body">
-                                     <h1 class="card-title">{{ $rejectedbooks }}</h1>
-                                     <p class="card-text uppercase">សៀវភៅ ដែលបានបដិសេធ</p>
-                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="table-responsive">
-                        <div class="card-header mt-3 border-top border-left border-right width100">
-                            Latest Issued Books
-                        </div>
+                        <div class="x_panel">
+                          <div class="x_title">
+                              <h2>សៀវ​ភៅ<small>តារាង</small></h2>
+                              <div class="clearfix"></div>
+                          </div>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -108,12 +103,15 @@
                             </tbody>
                         </table>
                     </div>
+                    </div>
 
                     <div class="table-responsive">
-                        <div class="card-header mt-3 border-top border-left border-right width100">
-                            Latest Requested Books
+                      <div class="x_panel">
+                        <div class="x_title">
+                            <h2>បញ្ចី​សៀវ​ភៅ<small>តារាង</small></h2>
+                            <div class="clearfix"></div>
                         </div>
-                        <table class="table table-bordered">
+                        <table width="100%" class="table table-striped table-bordered">
                             <thead>
                               <tr>
                                 <th>SL.</th>

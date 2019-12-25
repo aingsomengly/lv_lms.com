@@ -1,69 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="x_panel">
-      <div class="x_title">
-          <h2>បញ្ចី​សៀវ​ភៅ<small>តារាង</small></h2>
-          <ul class="nav navbar-right panel_toolbox">
-            <li>
-              <button href="{{route('books.create')}}" class="btn btn-primary">
-                  <i class="fa fa-trash"></i>
-                  បន្ថែម​សៀវភៅ
-              </button>
-            </li>
-          </ul>
-          <div class="clearfix"></div>
-      </div>
-                  <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>SL.</th>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>ISBN</th>
-                        <th>Quantity</th>
-                        <th>Issued</th>
-                        <th width="130px">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($books as $key => $book)
-                      <tr>
-                        <th scope="row">{{++$key}}.</th>
-                        <td><img src="images/{{$book->image}}" alt="{{$book->title}}" class="rounded" width="80px"></td>
-                        <td>
-                          <h4>{{$book->title}}</h4>
-                          Year:       <strong>{{$book->published_year}}</strong> <br>
-                          Author:     <strong>{{$book->author->name}}</strong> <br>
-                          Publisher:  <strong>{{$book->publisher->name}}</strong> <br>
-                          Language:   <strong>{{$book->language->name}}</strong> <br>
-                          Genre:
-                            @foreach($book->genres as $genre)
-                            <span class="badge badge-info">{{$genre->name}}</span>
-                            @endforeach
-                          <br>
-                        </td>
-                        <td>{{$book->ISBN}}</td>
-                        <td>{{$book->quantity}}</td>
-                        <td>{{$book->issuedbooks_count}}</td>
-                        <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-info" data-id="{{$book->id}}" id="bookview"><i class="fa fa-eye"></i></button>
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$book->id}}" id="bookedit"><i class="fa fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-danger" data-id="{{$book->id}}" id="bookdelete"><i class="fa fa-trash"></i></button>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $books->links() }}
-                </div>
-            </div>
-        </div>
+  <div class="x_panel">
+    <div class="x_title">
+        <h2>បញ្ចី​សៀវ​ភៅ<small>តារាង</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li>
+            <button href="{{route('books.create')}}"  id="createbook" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                បន្ថែម​សៀវភៅ
+            </button>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
     </div>
-</div>
+    <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>SL.</th>
+          <th>រូប​ភាព</th>
+          <th>ចំណងជើង</th>
+          <th>លេខ ISBN</th>
+          <th>ចំនួន</th>
+          <th>បញ្ហា</th>
+          <th width="100px">ប្រតិបត្តិ</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($books as $key => $book)
+        <tr>
+          <th scope="row">{{++$key}}.</th>
+          <td><img src="images/{{$book->image}}" alt="{{$book->title}}" class="rounded" width="80px"></td>
+          <td>
+            <h4>{{$book->title}}</h4>
+            Year:       <strong>{{$book->published_year}}</strong> <br>
+            Author:     <strong>{{$book->author->name}}</strong> <br>
+            Publisher:  <strong>{{$book->publisher->name}}</strong> <br>
+            Language:   <strong>{{$book->language->name}}</strong> <br>
+            Genre:
+              @foreach($book->genres as $genre)
+              <span class="badge badge-info">{{$genre->name}}</span>
+              @endforeach
+            <br>
+          </td>
+          <td>{{$book->ISBN}}</td>
+          <td>{{$book->quantity}}</td>
+          <td>{{$book->issuedbooks_count}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-xs btn-info" data-id="{{$book->id}}" id="bookview"><i class="fa fa-eye"></i> មើល​លំអិត</button>
+            <button type="button" class="btn btn-xs btn-warning" data-id="{{$book->id}}" id="bookedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+            <button type="button" class="btn btn-xs btn-danger" data-id="{{$book->id}}" id="bookdelete"><i class="fa fa-trash"></i> ​លុប</button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+
+    <div class="card-foter m-auto">
+        {{ $books->links() }}
+    </div>
+  </div>
 
 @include('books.modals.createbook')
 @include('books.modals.editbook')

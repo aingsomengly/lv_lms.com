@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure? you want to delete <span id="title"></span>?</p>
+        <p>​តើ​អ្នកប្រ​កដទេ? អ្នក​ចង់​លុប <span id="title"></span>?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

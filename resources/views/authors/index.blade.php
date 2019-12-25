@@ -1,53 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                  <strong>All author</strong>
-                  <button type="button" class="btn btn-sm btn-success float-right" id="createauthor"><i class="fas fa-plus-circle mr-1"></i>create author</button>
-                </div>
+<div class="x_panel">
+  <div class="x_title">
+      <h2>បញ្ចី​អ្នក​និពន្ធ<small>តារាង</small></h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li>
+          <button href="{{route('books.create')}}"  id="createauthor" class="btn btn-primary">
+              <i class="fa fa-plus"></i>
+              បន្ថែមអ្នក​និពន្ធ
+          </button>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+  </div>
+  <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>SL.</th>
+        <th>រូប​ភាព</th>
+        <th>​​ឈ្មោះ</th>
+        <th>ប្រទេស</th>
+        <th>ភាសា</th>
+        <th>ប្រតិបត្តិ</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($authors as $key => $author)
+      <tr>
+        <th scope="row">{{++$key}}.</th>
+        <td><img src="images/{{$author->image}}" alt="{{$author->title}}" class="rounded-circle" width="50px"></td>
+        <td>{{$author->name}}</td>
+        <td>{{$author->country->name}}</td>
+        <td>{{$author->language->name}}</td>
+        <td>
+          <button type="button" class="btn btn-xs btn-info" data-id="{{$author->id}}" id="authorview"><i class="fa fa-eye"></i> មើល​លំអិត</button>
+          <button type="button" class="btn btn-xs btn-warning" data-id="{{$author->id}}" id="authoredit"><i class="fa fa-pencil">​</i> កែ​តម្រូវ​</button>
+          <button type="button" class="btn btn-xs btn-danger" data-id="{{$author->id}}" id="authordelete"><i class="fa fa-trash"></i> លុប</button>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>SL.</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>Language</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($authors as $key => $author)
-                      <tr>
-                        <th scope="row">{{++$key}}.</th>
-                        <td><img src="images/{{$author->image}}" alt="{{$author->title}}" class="rounded-circle" width="50px"></td>
-                        <td>{{$author->name}}</td>
-                        <td>{{$author->country->name}}</td>
-                        <td>{{$author->language->name}}</td>
-                        <td>
-                          <button type="button" class="btn btn-sm btn-info" data-id="{{$author->id}}" id="authorview"><i class="fas fa-eye"></i></button>
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$author->id}}" id="authoredit"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-danger" data-id="{{$author->id}}" id="authordelete"><i class="fas fa-trash"></i></button>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $authors->links() }}
-                </div>
-
-            </div>
-        </div>
-    </div>
+  <div class="card-foter m-auto">
+      {{ $authors->links() }}
+  </div>
 </div>
 
 @include('authors.modals.createauthor')

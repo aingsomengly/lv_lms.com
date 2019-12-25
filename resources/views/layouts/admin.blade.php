@@ -22,7 +22,7 @@
     <link href="{{ asset('admin/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">
+    {{--  <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">  --}}
 
     <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css')}}" rel="stylesheet"/>
 

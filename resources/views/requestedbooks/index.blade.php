@@ -1,100 +1,99 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                  <strong>All Requested Book</strong>
-                  <button type="button" class="btn btn-sm btn-success float-right" id="requestedbook"><i class="fas fa-plus-circle mr-1"></i>request book</button>
-                </div>
+<div class="x_panel">
+  <div class="x_title">
+      <h2>បញ្ចី​បានស្នើរ​សុំ​​សៀវភៅ<small>តារាង</small></h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li>
+          <button href="{{route('requestedbooks.create')}}"  id="requestedbook" class="btn btn-primary">
+              <i class="fa fa-plus"></i>
+              បន្ថែមបានស្នើរ​សុំ​​សៀវភៅ
+          </button>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+  </div>
+  <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>SL.</th>
+        <th>Book</th>
 
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>SL.</th>
-                        <th>Book</th>
+        @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
+          <th>Requested By</th>
+        @endif
 
-                        @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-                          <th>Requested By</th>
-                        @endif
+        <th>Requested Date</th>
+        <th>Responded Date</th>
+        <th>Status</th>
+        <th>Issued Status</th>
+        <th width="90px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($requestedbooks as $requestedbook)
+      <tr>
+        <th scope="row">{{$requestedbook->id}}.</th>
+        <td>{{$requestedbook->book->title}}<em> by {{$requestedbook->book->author->name}}</em></td>
 
-                        <th>Requested Date</th>
-                        <th>Responded Date</th>
-                        <th>Status</th>
-                        <th>Issued Status</th>
-                        <th width="90px">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($requestedbooks as $requestedbook)
-                      <tr>
-                        <th scope="row">{{$requestedbook->id}}.</th>
-                        <td>{{$requestedbook->book->title}}<em> by {{$requestedbook->book->author->name}}</em></td>
+        @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
+          <td>{{$requestedbook->user->name}} </td>
+        @endif
 
-                        @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-                          <td>{{$requestedbook->user->name}} </td>
-                        @endif
+        <td>{{ strtok($requestedbook->created_at,' ') }}</td>
+        <td>{{$requestedbook->action_date or null}}</td>
 
-                        <td>{{ strtok($requestedbook->created_at,' ') }}</td>
-                        <td>{{$requestedbook->action_date or null}}</td>
+        <td class="text-center">
+          @if($requestedbook->status == 'pending')
+            <span class="badge badge-warning">Pending</span>
+          @elseif($requestedbook->status == 'accepted')
+            <span class="badge badge-success">Accepted</span>
+          @elseif($requestedbook->status == 'rejected')
+            <span class="badge badge-danger">Rejected</span>
+          @endif
+        </td>
 
-                        <td class="text-center">
-                          @if($requestedbook->status == 'pending')
-                            <span class="badge badge-warning">Pending</span>
-                          @elseif($requestedbook->status == 'accepted')
-                            <span class="badge badge-success">Accepted</span>
-                          @elseif($requestedbook->status == 'rejected')
-                            <span class="badge badge-danger">Rejected</span>
-                          @endif
-                        </td>
+        <td>
+          @if($requestedbook->issuedbook)
+            @if($requestedbook->issuedbook->penalty_money || $requestedbook->status == 'accepted')
+              <span class="badge badge-info">{{$requestedbook->issuedbook->status}}</span>
+              <span class="badge badge-light">{{$requestedbook->issuedbook->penalty_money}} {{$currency}}</span>
+            @elseif($requestedbook->status == 'pending')
+              <span class="badge badge-warning">Pending</span>
+            @elseif($requestedbook->status == 'rejected')
+              <span class="badge badge-danger">Rejected</span>
+            @endif
+          @else
+              @if($requestedbook->status == 'pending')
+                <span class="badge badge-warning">Pending</span>
+              @elseif($requestedbook->status == 'rejected')
+                <span class="badge badge-danger">Rejected</span>
+              @else
+                <span class="badge badge-danger">removed</span>
+              @endif
+          @endif
+        </td>
 
-                        <td>
-                          @if($requestedbook->issuedbook)
-                            @if($requestedbook->issuedbook->penalty_money || $requestedbook->status == 'accepted')
-                              <span class="badge badge-info">{{$requestedbook->issuedbook->status}}</span>
-                              <span class="badge badge-light">{{$requestedbook->issuedbook->penalty_money}} {{$currency}}</span>
-                            @elseif($requestedbook->status == 'pending')
-                              <span class="badge badge-warning">Pending</span>
-                            @elseif($requestedbook->status == 'rejected')
-                              <span class="badge badge-danger">Rejected</span>
-                            @endif
-                          @else
-                              @if($requestedbook->status == 'pending')
-                                <span class="badge badge-warning">Pending</span>
-                              @elseif($requestedbook->status == 'rejected')
-                                <span class="badge badge-danger">Rejected</span>
-                              @else
-                                <span class="badge badge-danger">removed</span>
-                              @endif
-                          @endif
-                        </td>
+        <td>
+          @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
+            <button type="button" class="btn btn-sm btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fa fa-pencil"></i> មើល​លំអិត</button>
+          @endif
 
-                        <td>
-                          @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-                            <button type="button" class="btn btn-sm btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fas fa-pencil-alt"></i></button>
-                          @endif
+          @if(auth()->user()->role_id == 3 && $requestedbook->status == 'accepted')
+              <button type="button" class="btn btn-sm btn-danger" disabled><i class="fa fa-trash"></i>​ លុប​</button>
+          @else
+              <button type="button" class="btn btn-sm btn-danger" data-id="{{$requestedbook->id}}" id="requestedbookdelete"><i class="fa fa-trash"></i> លុប</button>
+          @endif
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 
-                          @if(auth()->user()->role_id == 3 && $requestedbook->status == 'accepted')
-                              <button type="button" class="btn btn-sm btn-danger" disabled><i class="fas fa-trash"></i></button>
-                          @else
-                              <button type="button" class="btn btn-sm btn-danger" data-id="{{$requestedbook->id}}" id="requestedbookdelete"><i class="fas fa-trash"></i></button>
-                          @endif
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $requestedbooks->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="card-foter m-auto">
+      {{ $requestedbooks->links() }}
+  </div>
 </div>
 
 @include('requestedbooks.modals.create')

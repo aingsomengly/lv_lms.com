@@ -1,49 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                  <strong>All genre</strong>
-                  <button type="button" class="btn btn-sm btn-success float-right" id="creategenre"><i class="fas fa-plus-circle mr-1"></i>create genre</button>
-                </div>
-
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>SL.</th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($genres as $genre)
-                      <tr>
-                        <th scope="row">{{$genre->id}}.</th>
-                        <td>{{$genre->name}}</td>
-                        <td>{{$genre->slug}}</td>
-                        <td>
-                          <button type="button" class="btn btn-sm btn-info" data-id="{{$genre->id}}" id="genreview"><i class="fas fa-eye"></i></button>
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$genre->id}}" id="genreedit"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-danger" data-id="{{$genre->id}}" id="genredelete"><i class="fas fa-trash"></i></button>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $genres->links() }}
-                </div>
-            </div>
-        </div>
+  <div class="x_panel">
+    <div class="x_title">
+        <h2>បញ្ចី​​ប្រភេទ<small>តារាង</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li>
+            <button href="{{route('books.create')}}"  id="createauthor" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                បន្ថែម​ប្រភេទ
+            </button>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
     </div>
-</div>
+    <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>SL.</th>
+          <th>ឈ្មោះ​</th>
+          <th>Slug</th>
+          <th>ប្រ​តិ​បត្តិ</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($genres as $genre)
+        <tr>
+          <th scope="row">{{$genre->id}}.</th>
+          <td>{{$genre->name}}</td>
+          <td>{{$genre->slug}}</td>
+          <td>
+            <button type="button" class="btn btn-xs btn-info" data-id="{{$genre->id}}" id="genreview"><i class="fa fa-eye"></i> ​មើល​លំអិត</button>
+            <button type="button" class="btn btn-xs btn-warning" data-id="{{$genre->id}}" id="genreedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+            <button type="button" class="btn btn-xs btn-danger" data-id="{{$genre->id}}" id="genredelete"><i class="fa fa-trash"></i> ​លុប</button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+
+    <div class="card-foter m-auto">
+        {{ $genres->links() }}
+    </div>
+  </div>
 
 @include('genres.modals.creategenre')
 @include('genres.modals.editgenre')
