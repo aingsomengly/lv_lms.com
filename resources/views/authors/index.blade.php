@@ -3,7 +3,7 @@
 @section('content')
 <div class="x_panel">
   <div class="x_title">
-      <h2>បញ្ចី​អ្នក​និពន្ធ<small>តារាង</small></h2>
+      <h2>អ្នក​និពន្ធ<small>តារាង</small></h2>
       <ul class="nav navbar-right panel_toolbox">
         <li>
           <button href="{{route('books.create')}}"  id="createauthor" class="btn btn-primary">
@@ -29,7 +29,7 @@
       @foreach($authors as $key => $author)
       <tr>
         <th scope="row">{{++$key}}.</th>
-        <td><img src="images/{{$author->image}}" alt="{{$author->title}}" class="rounded-circle" width="50px"></td>
+        <td><img src=images/{{$author->image}}" alt="{{$author->title}}" class="rounded-circle" width="50px"></td>
         <td>{{$author->name}}</td>
         <td>{{$author->country->name}}</td>
         <td>{{$author->language->name}}</td>

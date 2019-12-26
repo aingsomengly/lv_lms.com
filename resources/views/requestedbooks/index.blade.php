@@ -77,13 +77,13 @@
 
         <td>
           @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-            <button type="button" class="btn btn-sm btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fa fa-pencil"></i> មើល​លំអិត</button>
+            <button type="button" class="btn btn-xs btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fa fa-pencil"></i> មើល​លំអិត</button>
           @endif
 
           @if(auth()->user()->role_id == 3 && $requestedbook->status == 'accepted')
-              <button type="button" class="btn btn-sm btn-danger" disabled><i class="fa fa-trash"></i>​ លុប​</button>
+              <button type="button" class="btn btn-xs btn-danger" disabled><i class="fa fa-trash"></i>​ លុប​</button>
           @else
-              <button type="button" class="btn btn-sm btn-danger" data-id="{{$requestedbook->id}}" id="requestedbookdelete"><i class="fa fa-trash"></i> លុប</button>
+              <button type="button" class="btn btn-xs btn-danger" data-id="{{$requestedbook->id}}" id="requestedbookdelete"><i class="fa fa-trash"></i> លុប</button>
           @endif
         </td>
       </tr>

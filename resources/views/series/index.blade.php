@@ -30,9 +30,9 @@
           <td>{{$series->name}}</td>
           <td>{{$series->slug}}</td>
           <td>
-            <button type="button" class="btn btn-sm btn-info" data-id="{{$series->id}}" id="seriesview"><i class="fa fa-eye"></i> មើល​លំអិត</button>
-            <button type="button" class="btn btn-sm btn-warning" data-id="{{$series->id}}" id="seriesedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
-            <button type="button" class="btn btn-sm btn-danger" data-id="{{$series->id}}" id="seriesdelete"><i class="fa fa-trash"></i> ​លុប</button>
+            <button type="button" class="btn btn-xs btn-info" data-id="{{$series->id}}" id="seriesview"><i class="fa fa-eye"></i> មើល​លំអិត</button>
+            <button type="button" class="btn btn-xs btn-warning" data-id="{{$series->id}}" id="seriesedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+            <button type="button" class="btn btn-xs btn-danger" data-id="{{$series->id}}" id="seriesdelete"><i class="fa fa-trash"></i> ​លុប</button>
           </td>
         </tr>
         @endforeach

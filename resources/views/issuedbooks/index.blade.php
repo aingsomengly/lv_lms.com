@@ -14,16 +14,16 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>SL.</th>
-                        <th>Book</th>
-                        <th>Member</th>
+                        <th>លេខ​រៀង</th>
+                        <th>សៀវ​ភៅ</th>
+                        <th>សមាជិក</th>
                         <th>Issued Date</th>
-                        <th>Expiry Date</th>
-                        <th>Remain Days</th>
-                        <th>Returned Date</th>
-                        <th>Penalty ({{ $currency }})</th>
-                        <th>Status</th>
-                        <th width="90px">Action</th>
+                        <th>ការ​ផុត​កំណត់ បរិច្ឆេទ</th>
+                        <th>ថ្ងៃ​ដែល​នៅ​សល់</th>
+                        <th>កាលបរិច្ឆេទ ត្រឡប់មកវិញ</th>
+                        <th>ការពិន័យ ({{ $currency }})</th>
+                        <th>ស្ថានភាព</th>
+                        <th width="90px">ប្រតិបត្តិ</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -85,8 +85,8 @@
                           @endif
                         </td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$issuedbook->id}}" id="issuedbookedit"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-danger" data-id="{{$issuedbook->id}}" id="issuedbookdelete"><i class="fas fa-trash"></i></button>
+                          <button type="button" class="btn btn-xs btn-warning" data-id="{{$issuedbook->id}}" id="issuedbookedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+                          <button type="button" class="btn btn-xs btn-danger" data-id="{{$issuedbook->id}}" id="issuedbookdelete"><i class="fa fa-trash"></i> លុប</button>
                         </td>
                       </tr>
                       @endforeach

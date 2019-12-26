@@ -14,12 +14,12 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>SL.</th>
-                        <th>Name</th>
+                        <th>លេខ​រៀង</th>
+                        <th>ឈ្មោះ</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>ប្រតិបត្តិ</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -37,11 +37,11 @@
                           @endif
                         </td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-warning" data-id="{{$user->id}}" id="useredit"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" class="btn btn-sm btn-dark" data-id="{{$user->id}}" id="changeuserpassword"><i class="fas fa-lock"></i></button>
+                          <button type="button" class="btn btn-xs btn-warning" data-id="{{$user->id}}" id="useredit"><i class="fa fa-pencil">​</i> កែតម្រូវ</button>
+                          <button type="button" class="btn btn-xs btn-dark" data-id="{{$user->id}}" id="changeuserpassword"><i class="fa fa-lock"></i> ចាក់សោរ</button>
 
                           @if(auth()->user()->role->slug == 'admin')
-                            <button type="button" class="btn btn-sm btn-danger" data-id="{{$user->id}}" id="userdelete"><i class="fas fa-trash"></i></button>
+                            <button type="button" class="btn btn-xs btn-danger" data-id="{{$user->id}}" id="userdelete"><i class="fa fa-trash"></i> លុប</button>
                           @endif
                         </td>
                       </tr>
