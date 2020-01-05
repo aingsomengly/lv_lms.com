@@ -83,11 +83,11 @@
                         <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th>SL.</th>
-                                <th>Book</th>
-                                <th>Member</th>
-                                <th>Publisher</th>
-                                <th>ISBN</th>
+                                <th>លេខរៀង</th>
+                                <th>សៀវ​ភៅ</th>
+                                <th>សមាជិក</th>
+                                <th>អ្នក​បោះពុម្ភ</th>
+                                <th>លេខ​ ISBN</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -108,17 +108,17 @@
                     <div class="table-responsive">
                       <div class="x_panel">
                         <div class="x_title">
-                            <h2>បញ្ចី​សៀវ​ភៅ<small>តារាង</small></h2>
+                            <h2>​ស្នើរសុំសៀវ​ភៅ<small>តារាង</small></h2>
                             <div class="clearfix"></div>
                         </div>
                         <table width="100%" class="table table-striped table-bordered">
                             <thead>
                               <tr>
-                                <th>SL.</th>
-                                <th>Book</th>
-                                <th>Member</th>
-                                <th>Publisher</th>
-                                <th>ISBN</th>
+                                <th>​លេខ​រៀង</th>
+                                <th>សៀវ​ភៅ</th>
+                                <th>សមាជិក</th>
+                                <th>អ្នក​បោះពុម្ភ</th>
+                                <th>លេខ ISBN</th>
                               </tr>
                             </thead>
                             <tbody>

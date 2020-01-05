@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +12,10 @@ use App\User;
 //   $role = User::find(1)->role;
 //       return $role;
 // });
+
+Route::get('/autocomplete', 'AutocompleteController@index');
+Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
+
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/book/{slug}', 'HomeController@show')->name('frontend.book.show');
@@ -40,7 +45,7 @@ Route::group(['middleware' => ['auth','roles'], 'roles' => ['admin']], function(
 
 // BOTH LIBRARIAN AND ADMIN
 Route::group(['middleware' => ['auth','roles'], 'roles' => ['librarian','admin']], function(){
-
+  Route::get('/printbook','BooksController@printBook')->name('book.print');
   Route::resource('books','BooksController');
   Route::resource('authors','AuthorsController');
   Route::resource('countries','CountriesController');
@@ -62,6 +67,9 @@ Route::group(['middleware' => ['auth','roles'], 'roles' => ['librarian','admin']
 Route::group(['middleware' => ['auth','roles'], 'roles' => ['Member','librarian','Admin']], function(){
 
   Route::resource('requestedbooks','RequestedbookController');
+  Route::post('/requestedbooks/fetch', 'RequestedbookController@fetch')->name('requestedbooks.fetch');
+
+
   Route::resource('posts','PostController');
   Route::resource('categories','CategoryController')->except('create');
 

@@ -17,15 +17,15 @@
               <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">ឈ្មោះ</label>
                   <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
                   </div>
               </div>
 
               <div class="form-group row">
                   <label for="country_id" class="col-sm-2 col-form-label">ប្រទេស</label>
                   <div class="col-sm-10">
-                      <select class="form-control select2-single" name="country_id" id="country_id">
-                        <option selected disabled>-Select Country-</option>
+                      <select class="form-control select2-single" name="country_id" id="country_id" required>
+                        <option value="" selected disabled>-- ជ្រើរើស​​ ប្រទេស --</option>
                         @foreach($countries as $country)
                         <option value="{{$country->id}}">{{$country->name}}</option>
                         @endforeach
@@ -36,8 +36,8 @@
               <div class="form-group row">
                   <label for="language_id" class="col-sm-2 col-form-label">ភាសា</label>
                   <div class="col-sm-10">
-                      <select class="form-control select2-single" name="language_id" id="language_id">
-                        <option selected disabled>-ជ្រើរើស​ ភាសា-</option>
+                      <select class="form-control select2-single" name="language_id" id="language_id" required>
+                        <option value="" selected disabled>-- ជ្រើរើស​ ភាសា --</option>
                         @foreach($languages as $language)
                         <option value="{{$language->id}}">{{$language->name}}</option>
                         @endforeach
@@ -48,14 +48,14 @@
               <div class="form-group row">
                   <label for="dateofbirth-create" class="col-sm-2 col-form-label">ថ្ងែទី ​ខែឆ្នាំ ​កំណើត</label>
                   <div class="col-sm-10">
-                      <input type="text" name="dateofbirth" class="form-control datepicker" id="dateofbirth-create" placeholder="Date of Birth">
+                      <input type="text" name="dateofbirth" class="form-control datepicker" id="dateofbirth-create" placeholder="Date of Birth" required>
                   </div>
               </div>
 
               <div class="form-group row">
                   <label for="bio" class="col-sm-2 col-form-label">ជីវ​ប្រវត្តិ</label>
                   <div class="col-sm-10">
-                      <textarea name="bio" class="form-control" id="createauthorbio" placeholder="Biography"></textarea>
+                      <textarea name="bio" class="form-control" id="createauthorbio" placeholder="Biography" required></textarea>
                   </div>
               </div>
 
@@ -64,7 +64,7 @@
             <div class="col-md-3">
               <div class="form-group row">
                 <img src="" alt="" width="100%" height="200px" id="authorimagecreatepreview" style="border:1px solid #ccc">
-                <input type="file" name="image" class="form-control-file mt-3" id="authorimagecreate">
+                <input type="file" name="image" class="form-control-file mt-3" id="authorimagecreate" required>
                 ជ្រើរើស​ រូបភាព
               </div>
             </div> <!-- /.col-md-3 -->

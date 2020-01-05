@@ -1,106 +1,114 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                  <strong>All Issued Book</strong>
-                  <button type="button" class="btn btn-sm btn-success float-right" id="issuebook"><i class="fas fa-plus-circle mr-1"></i>issue book</button>
-                </div>
-
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>លេខ​រៀង</th>
-                        <th>សៀវ​ភៅ</th>
-                        <th>សមាជិក</th>
-                        <th>Issued Date</th>
-                        <th>ការ​ផុត​កំណត់ បរិច្ឆេទ</th>
-                        <th>ថ្ងៃ​ដែល​នៅ​សល់</th>
-                        <th>កាលបរិច្ឆេទ ត្រឡប់មកវិញ</th>
-                        <th>ការពិន័យ ({{ $currency }})</th>
-                        <th>ស្ថានភាព</th>
-                        <th width="90px">ប្រតិបត្តិ</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @php
-                        $status_arr = array();
-                      @endphp
-
-                      @foreach($issuedbooks as $issuedbook)
-                      @php
-                        $today  = date_create(date("Y-m-d"));
-                        $expiry = date_create($issuedbook->expiry_date);
-                        $diff   = date_diff($today,$expiry);
-                        $remain = $diff->format("%R%a days");
-                        $status = (int)$diff->format("%R%a");
-
-                        array_push($status_arr, array($issuedbook->id, $issuedbook->status, $status));
-
-                        $retu_d = date_create($issuedbook->return_date);
-                        $diff_r = date_diff($retu_d,$expiry);
-                        $retu_r = $diff_r->format("%R%a days");
-
-                      @endphp
-                      <tr>
-                        <th scope="row">{{$issuedbook->id}}.</th>
-                        <td>{{$issuedbook->book->title}} <em>by {{$issuedbook->book->author->name}}</em></td>
-                        <td>{{$issuedbook->user->name}}</td>
-                        <td>{{$issuedbook->issued_date}}</td>
-                        <td>{{$issuedbook->expiry_date}}</td>
-                        <td>
-                          @if($issuedbook->status == 'borrowed' || $issuedbook->status == 'late')
-                            <span>{{ $remain }}</span>
-                          @elseif($issuedbook->status == 'returned')
-                            <span class="badge badge-success">{{ $retu_r }}</span>
-                          @elseif($issuedbook->status == 'lost')
-                            <span class="badge badge-dark">{{ $retu_r }}</span>
-                          @endif
-                        </td>
-                        <td>{{$issuedbook->return_date or null}}</td>
-                        <td>
-                          @if($issuedbook->status == 'lost')
-                            {{$issuedbook->book->price}} +
-                            {{$issuedbook->penalty_money}}
-                          @else
-                             {{$issuedbook->penalty_money}}
-                          @endif
-                        </td>
-
-                        <td class="text-center">
-                          @if($issuedbook->status == 'borrowed')
-                            <span class="badge badge-warning">Borrowed</span>
-                          @elseif($issuedbook->status == 'returned')
-                            <span class="badge badge-success">Returned</span>
-                          @elseif($issuedbook->status == 'late')
-                            <span class="badge badge-danger">Late</span>
-                          @elseif($issuedbook->status == 'lost')
-                            <span class="badge badge-dark">Lost</span>
-                          @else
-                            <span class="badge badge-info">null</span>
-                          @endif
-                        </td>
-                        <td class="text-center">
-                          <button type="button" class="btn btn-xs btn-warning" data-id="{{$issuedbook->id}}" id="issuedbookedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
-                          <button type="button" class="btn btn-xs btn-danger" data-id="{{$issuedbook->id}}" id="issuedbookdelete"><i class="fa fa-trash"></i> លុប</button>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="card-foter m-auto">
-                    {{ $issuedbooks->links() }}
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>{{$message}}</strong>
     </div>
-</div>
+    @endif
+  </div>
+
+  <div class="x_panel">
+    <div class="x_title">
+        <h3>កិច្ចការ​សៀវ​ភៅ<small>តារាង</small></h3>
+        <ul class="nav navbar-right panel_toolbox">
+          <li>
+            <button href="{{route('books.create')}}"  id="issuebook" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                បន្ថែម​កិច្ចការ​សៀវ​ភៅ
+            </button>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>លេខ​រៀង</th>
+            <th>សៀវ​ភៅ</th>
+            <th>សមាជិក</th>
+            <th>Issued Date</th>
+            <th>ការ​ផុត​កំណត់ បរិច្ឆេទ</th>
+            <th>ថ្ងៃ​ដែល​នៅ​សល់</th>
+            <th>កាលបរិច្ឆេទ ត្រឡប់មកវិញ</th>
+            <th>ការពិន័យ ({{ $currency }})</th>
+            <th>ស្ថានភាព</th>
+            <th width="90px">ប្រតិបត្តិ</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php
+            $status_arr = array();
+          @endphp
+
+          @foreach($issuedbooks as $issuedbook)
+          @php
+            $today  = date_create(date("Y-m-d"));
+            $expiry = date_create($issuedbook->expiry_date);
+            $diff   = date_diff($today,$expiry);
+            $remain = $diff->format("%R%a days");
+            $status = (int)$diff->format("%R%a");
+
+            array_push($status_arr, array($issuedbook->id, $issuedbook->status, $status));
+
+            $retu_d = date_create($issuedbook->return_date);
+            $diff_r = date_diff($retu_d,$expiry);
+            $retu_r = $diff_r->format("%R%a days");
+
+          @endphp
+          <tr>
+            <th scope="row">{{$issuedbook->id}}.</th>
+            <td>{{$issuedbook->book->title}} <em>by {{$issuedbook->book->author->name}}</em></td>
+            <td>{{$issuedbook->user->name}}</td>
+            <td>{{$issuedbook->issued_date}}</td>
+            <td>{{$issuedbook->expiry_date}}</td>
+            <td>
+              @if($issuedbook->status == 'borrowed' || $issuedbook->status == 'late')
+                <span>{{ $remain }}</span>
+              @elseif($issuedbook->status == 'returned')
+                <span class="badge badge-success">{{ $retu_r }}</span>
+              @elseif($issuedbook->status == 'lost')
+                <span class="badge badge-dark">{{ $retu_r }}</span>
+              @endif
+            </td>
+            <td>{{$issuedbook->return_date or null}}</td>
+            <td>
+              @if($issuedbook->status == 'lost')
+                {{$issuedbook->book->price}} +
+                {{$issuedbook->penalty_money}}
+              @else
+                  {{$issuedbook->penalty_money}}
+              @endif
+            </td>
+
+            <td class="text-center">
+              @if($issuedbook->status == 'borrowed')
+                <span class="badge badge-warning">Borrowed</span>
+              @elseif($issuedbook->status == 'returned')
+                <span class="badge badge-success">Returned</span>
+              @elseif($issuedbook->status == 'late')
+                <span class="badge badge-danger">Late</span>
+              @elseif($issuedbook->status == 'lost')
+                <span class="badge badge-dark">Lost</span>
+              @else
+                <span class="badge badge-info">null</span>
+              @endif
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-xs btn-warning" data-id="{{$issuedbook->id}}" id="issuedbookedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
+              <button type="button" class="btn btn-xs btn-danger" data-id="{{$issuedbook->id}}" id="issuedbookdelete"><i class="fa fa-trash"></i> លុប</button>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+      <div class="card-foter m-auto">
+          {{ $issuedbooks->links() }}
+      </div>
+  </div>
+
 
 @include('issuedbooks.modals.create')
 @include('issuedbooks.modals.edit')

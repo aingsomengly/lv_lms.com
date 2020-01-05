@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Issue Book</h5>
+        <h5 class="modal-title">កែសម្រួលសៀវភៅចេញ</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -14,7 +14,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <label for="bookid">Books</label>
+                <label for="bookid">សៀវភៅ</label>
                 <select name="book_id" class="form-control select2-single" id="bookid">
                   @foreach($books as $book)
                     @php

@@ -11,6 +11,9 @@
     <title>{{ config('app.name', 'Library Management System') }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Moul&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -45,7 +48,7 @@
     <link href="{{ asset('admin/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('admin/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('admin/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.css')}}" rel="stylesheet">
 </head>
 <body>
     <body class="nav-md">
@@ -54,7 +57,7 @@
             <div class="col-md-3 left_col menu_fixed">
               <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                  <a href="#" class="site_title"><i class="fa fa-home"></i> <span>គ្រប់គ្រង បណ្ណា​ល័យ</span></a>
+                  <a href="#" class="site_title"><i class="fa fa-home"></i> <span class="font-moul">គ្រប់គ្រង បណ្ណា​ល័យ</span></a>
                 </div>
     
                 <div class="clearfix"></div>
@@ -65,7 +68,7 @@
                     <img src="{{ Auth::user()->photo }}" alt="..." class="img-circle profile_img">
                   </div>
                   <div class="profile_info">
-                    <span>សូមស្វាគមន៏,</span>
+                    <span class="font-moul">សូមស្វាគមន៏,</span>
                     <h2> {{ Auth::user()->name }}</h2>
                   </div>
                 </div>
@@ -78,13 +81,13 @@
                   <div class="menu_section">
                     <h3>ទូ​ទៅ</h3>
                     <ul class="nav side-menu">
-                    <li><a href="{{route('dashboard')}}"><i class="fa fa-bar-chart-o"></i>ផ្ទៃតាប្លូ</a>
+                    <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i>ផ្ទៃតាប្លូ</a>
                         
                     @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
                         <li><a><i class="fa fa-book"></i>សៀវភៅ <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('requestedbooks.index')}}"​​​>ស្នើរសុំ​សៀវភៅ</a></li>
-                                <li><a href="{{route('issuedbooks.index')}}">បញ្ហា​សៀវភៅ</a></li>
+                                <li><a href="{{route('issuedbooks.index')}}">កិច្ចការ​សៀវ​ភៅ</a></li>
                                 {{--  <li><a href="return">ប្រគល់​​សៀវភៅ</a></li>  --}}
                                 <li><a href="{{route('authors.index')}}">អ្នកនិពន្ធ</a></li>
                                 <li><a href="{{route('genres.index')}}">ប្រភេទ​សៀវភៅ</a></li>
@@ -106,7 +109,7 @@
                         </ul>
                       </li> --}}
                         @if( auth()->user() && (auth()->user()->role->slug == 'admin' || auth()->user()->role->slug == 'liberian') )
-                            <li><a href="{{ route('settings.index') }}"><i class="fa fa-bar-chart-o"></i>កំណត់</a>
+                            <li><a href="{{ route('settings.index') }}"><i class="fa fa-gear"></i>កំណត់</a>
                         @endif
                        {{-- <li><a><i class="fa fa-users"></i> Supplier <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -160,7 +163,7 @@
                 <!-- /sidebar menu -->
     
                 <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
+                {{-- <div class="sidebar-footer hidden-small">
                   <a data-toggle="tooltip" data-placement="top" title="Settings">
                     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                   </a>
@@ -173,7 +176,7 @@
                   <a data-toggle="tooltip" data-placement="top" title="Logout" href="#">
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                   </a>
-                </div>
+                </div> --}}
                 <!-- /menu footer buttons -->
               </div>
             </div>
@@ -307,7 +310,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js" charset="utf-8"></script>
-
+    @yield('script')
 
 
 
@@ -335,11 +338,11 @@
     <script src="{{ asset('admin/vendors/jszip/dist/jszip.min.js')}}"></script>
     <script src="{{ asset('admin/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{ asset('admin/vendors/pdfmake/build/vfs_fonts.js')}}"></script> 
+    
 
 
     <script src="{{ asset('admin/build/js/custom.min.js')}}"></script>
     <!-- Dynamic Table -->
-
     <!-- Bootstrap -->
     <!-- FastClick -->
     <script src="{{ asset('admin/vendors/fastclick/lib/fastclick.js')}}"></script>
@@ -361,13 +364,13 @@
         });
 
         // SELECT2
-        $('.select2-single').select2({
-            width: 'resolve',
-            placeholder: '-- Select --',
-        });
-        $('.select2-multiple').select2({
-            placeholder: '-- Select --',
-        });
+        // $('.select2-single').select2({
+        //     width: 'resolve',
+        //     placeholder: '-- Select --',
+        // });
+        // $('.select2-multiple').select2({
+        //     placeholder: '-- Select --',
+        // });
 
         // BOOTSTRAP-DATEPICKER
         $('.datepicker').datepicker({
@@ -397,7 +400,7 @@
 
     </script>
 
-    @yield('script')
+    
 
 </body>
 </html>

@@ -337,7 +337,7 @@
     <script src="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 
 
-   @yield('js')
+   @yield('script')
 
   </body>
 </html>

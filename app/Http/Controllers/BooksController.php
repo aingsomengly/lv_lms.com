@@ -36,7 +36,6 @@ class BooksController extends Controller
         return view('books.index', compact('books','authors','languages','allseries','publishers','genres'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -85,20 +84,17 @@ class BooksController extends Controller
         return back()->with('success', 'Book added successfully.');
     }
 
-
     public function show($id)
     {
       $book = Book::with(['genres','author','publisher','language'])->findOrFail($id);
       return response()->json(['book' => $book]);
     }
 
-
     public function edit($id)
     {
         $book = Book::with('genres')->findOrFail($id);
         return response()->json(['book' => $book]);
     }
-
 
     public function update(Request $request, $id)
     {
@@ -157,7 +153,6 @@ class BooksController extends Controller
       return back()->with('success', 'Book updated successfully.');
     }
 
-
     public function destroy($id)
     {
       $book = Book::findOrFail($id);
@@ -170,5 +165,10 @@ class BooksController extends Controller
       $book->delete();
 
       return response()->json(['book' => 'deleted']);
+    }
+    
+    public function printBook()
+    {
+      return view('print.index');
     }
 }

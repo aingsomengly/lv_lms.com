@@ -6,7 +6,7 @@
         <h2>បញ្ចី​​ប្រភេទ<small>តារាង</small></h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
-            <button href="{{route('books.create')}}"  id="createauthor" class="btn btn-primary">
+            <button href="{{route('books.create')}}"  id="creategenre" class="btn btn-primary">
                 <i class="fa fa-plus"></i>
                 បន្ថែម​ប្រភេទ
             </button>

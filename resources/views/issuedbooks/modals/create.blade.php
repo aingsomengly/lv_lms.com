@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Issue Book</h5>
+        <h5 class="modal-title">កិច្ចការ សៀវភៅ</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,9 +13,9 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <label for="book_id">Books</label>
-                <select name="book_id" class="form-control select2-single" id="book_id">
-                  <option selected disabled>-- SELECT BOOK --</option>
+                <label for="book_id">សៀវភៅ</label>
+                <select name="book_id" class="form-control select2-single" id="book_id" required>
+                  <option selected disabled>-- ជ្រើស​រើស សៀវភៅ --</option>
                     @foreach($books as $book)
                       @if($book->quantity > $book->issuedbooks_count)
                         <option value="{{$book->id}}">
@@ -29,9 +29,9 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <label for="user_id">Members</label>
+                <label for="user_id">សមាជិក</label>
                 <select name="user_id" class="form-control select2-single" id="user_id">
-                  <option selected disabled>-- SELECT MEMBER --</option>
+                  <option selected disabled>-- ជ្រើស​រើស សមាជិក --</option>
                   @foreach($users as $user)
                     <option value="{{$user->id}}">
                       {{$user->name}}
@@ -50,13 +50,13 @@
           @endphp
           <div class="col-md-6">
             <div class="form-group">
-              <label for="">Issued Date</label>
+              <label for="">កាលបរិច្ឆេទចេញ</label>
               <input type="text" name="issued_date" class="form-control datepicker" value="{{ $today }}">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="">Expiry Date <span class="text-dark">( {{$nameOfDay}} )</span></label>
+              <label for="">ថ្ងៃ​ផុតកំណត់ <span class="text-dark">( {{$nameOfDay}} )</span></label>
               <input type="text" name="expiry_date" class="form-control datepicker" value="{{ $expiry_date }}">
             </div>
           </div>
@@ -64,18 +64,18 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="">Penalty Money</label>
+              <label for="">ប្រាក់ពិន័យ</label>
               <input type="number" name="penalty_money" class="form-control" value="0">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">ស្ថានភាព</label>
                 <select name="status" class="form-control" id="status">
-                  <option value="borrowed">Borrowed</option>
-                  <option value="returned">Returned</option>
-                  <option value="late">Late</option>
-                  <option value="lost">Lost</option>
+                  <option value="borrowed">បានខ្ចី</option>
+                  <option value="returned">បាន​ប្រគល់</option>
+                  <option value="late">យឺត</option>
+                  <option value="lost">បាត់</option>
                 </select>
               </div>
           </div>

@@ -15,7 +15,7 @@
         <h2>ប្រទេស<small>តារាង</small></h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
-            <button href="{{route('countries.create')}}"  id="createbook" class="btn btn-primary">
+            <button href="{{route('countries.create')}}"  id="createcountry" class="btn btn-primary">
                 <i class="fa fa-plus"></i>
                 បន្ថែម​ប្រទេស
             </button>

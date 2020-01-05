@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Requestedbook;
-use App\Issuedbook;
-use App\Setting;
+use Auth;
 use App\Book;
 use App\User;
-use Auth;
+use App\Setting;
+use App\Issuedbook;
+use App\Requestedbook;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequestedbookController extends Controller
 {
@@ -118,4 +119,30 @@ class RequestedbookController extends Controller
 
         return response()->json(['requestedbook' => 'deleted']);
     }
+
+    // function fetch(Request $request)
+    // {
+    //  if($request->get('query'))
+    //  {
+    //   $query = $request->get('query');
+    //   $book = DB::table('books')
+    //     ->where('ISBN','LIKE', "%{$query}%")
+    //     ->get();
+
+      // $author = DB::table('authors')
+      // ->where('ISBN','LIKE', "%{$query}%")
+      // ->get();
+
+    //   $output = '<ul class="dropdown-menu" style="display:block; position:relative; border-radius:10px">';
+    //   foreach($book as $row)
+    //   {
+    //    $output .= '
+    //    <li value="'.$row->id.'"><a style="padding: 10px; border-radius:10px" href="#">'.$row->id.' . '.$row->title.' ('.$row->ISBN.')</a></li>
+    //    ';
+    //   }
+    //   $output .= '</ul>';
+    //   echo $output;
+    //  }
+    // }
+    
 }

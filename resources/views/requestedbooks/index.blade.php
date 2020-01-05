@@ -3,12 +3,13 @@
 @section('content')
 <div class="x_panel">
   <div class="x_title">
-      <h2>បញ្ចី​បានស្នើរ​សុំ​​សៀវភៅ<small>តារាង</small></h2>
+      <h2>ស្នើរ​សុំ​​សៀវភៅ<small>តារាង</small></h2>
       <ul class="nav navbar-right panel_toolbox">
         <li>
-          <button href="{{route('requestedbooks.create')}}"  id="requestedbook" class="btn btn-primary">
+          <button href="{{route('requestedbooks.create')}}" id="requestedbook" class="btn btn-primary">
+            បន្ថែមស្នើរ​សុំ​​សៀវភៅ
               <i class="fa fa-plus"></i>
-              បន្ថែមបានស្នើរ​សុំ​​សៀវភៅ
+              
           </button>
         </li>
       </ul>
@@ -17,18 +18,18 @@
   <table width="100%" id="datatable-buttons" class="table table-striped table-bordered">
     <thead>
       <tr>
-        <th>SL.</th>
-        <th>Book</th>
+        <th>​លេខរៀន</th>
+        <th>ស្នើរ​សុំ​​សៀវភៅ</th>
 
         @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-          <th>Requested By</th>
+          <th>បាន​ស្នើរ​សុំដោយ</th>
         @endif
 
-        <th>Requested Date</th>
-        <th>Responded Date</th>
-        <th>Status</th>
-        <th>Issued Status</th>
-        <th width="90px">Action</th>
+        <th>កាលបរិច្ឆេទស្នើសុំ</th>
+        <th>កាលបរិច្ឆេទឆ្លើយតប</th>
+        <th>ស្ថានភាព</th>
+        <th>ស្ថានភាពចេញ</th>
+        <th width="90px">ប្រត្តិបត្តិ</th>
       </tr>
     </thead>
     <tbody>
@@ -77,7 +78,7 @@
 
         <td>
           @if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1)
-            <button type="button" class="btn btn-xs btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fa fa-pencil"></i> មើល​លំអិត</button>
+            <button type="button" class="btn btn-xs btn-warning" data-id="{{$requestedbook->id}}" id="requestedbookedit"><i class="fa fa-pencil"></i> កែ​តម្រូវ</button>
           @endif
 
           @if(auth()->user()->role_id == 3 && $requestedbook->status == 'accepted')
@@ -103,8 +104,39 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --}}
+<script type="text/javascript">
+      $('.js-example-basic-single').select2();
+   //Autocomplete
+  //  $(document).ready(function(){
+
+  //   $('#book_id').keyup(function(){ 
+  //         var query = $(this).val();
+  //         if(query != '')
+  //         {
+  //           var _token = $('input[name="_token"]').val();
+  //           $.ajax({
+  //           url:"{{ route('requestedbooks.fetch') }}",
+  //           method:"POST",
+  //           data:{query:query, _token:_token},
+  //           success:function(data){
+  //             $('#booklist').fadeIn();  
+  //                     $('#booklist').html(data);
+  //           }
+  //           });
+  //         }
+  //     });
+
+  //     $(document).on('click', 'li', function(){  
+  //         $('#book_id').val($(this).text());  
+  //         $('#booklist').fadeOut();  
+  //     });  
+
+  // });
+
+  //ADD
   $(document).on('click', '#requestedbook', function(e){
     $('#requestedbookmodal').modal('show');
   });
@@ -149,4 +181,6 @@
   });
 
 </script>
+
+
 @endsection
